@@ -24,4 +24,5 @@ jobs:
           ls -al
           cd /usr/src/app
           git clone https://github.com/Coremotor/docker-learn.git
+          cd docker-learn
           docker compose up --build
