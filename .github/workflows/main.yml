@@ -24,7 +24,7 @@ jobs:
     - name: Setup SSH
       uses: MrSquaare/ssh-setup-action@v1
       with:
-        host: github.com
+        host: root@194.67.74.121
         private-key: ${{ secrets.SSH_KEY }}
 
     - name: Echo
