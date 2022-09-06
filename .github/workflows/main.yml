@@ -20,9 +20,10 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          whoami
-          ls -al
           cd /usr/src/app
           git clone https://github.com/Coremotor/docker-learn.git
           cd docker-learn
           docker compose up --build
+
+    - name: Happy message
+      run: echo "End"
