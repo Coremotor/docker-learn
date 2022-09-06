@@ -1,9 +1,7 @@
-name: TEST
+name: PROD_DEPLOY
 on:
   push:
     branches: [ "master" ]
-#  pull_request:
-#    branches: [ "master" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -13,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: executing remote ssh commands using ssh key
+    - name: Deploy in prod
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -25,6 +23,7 @@ jobs:
           git clone https://github.com/Coremotor/docker-learn.git
           cd docker-learn
           docker-compose up --build -d
+          docker image prune
 
     - name: Happy message
-      run: echo "End"
+      run: echo "End deploy production app"
