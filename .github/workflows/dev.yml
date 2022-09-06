@@ -23,7 +23,7 @@ jobs:
           git clone https://github.com/Coremotor/docker-learn.git
           cd docker-learn
           docker-compose up --build -d
-          docker image prune
+          docker image prune -y
 
     - name: Happy message
       run: echo "End deploy develop app"
