@@ -23,7 +23,7 @@ jobs:
           cd /usr/src/app
           git clone https://github.com/Coremotor/docker-learn.git
           cd docker-learn
-          docker-compose up --build
+          docker-compose up --build -d
 
     - name: Happy message
       run: echo "End"
