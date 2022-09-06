@@ -21,6 +21,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd /usr/src/app
+          rm -R docker-learn
           git clone https://github.com/Coremotor/docker-learn.git
           cd docker-learn
           docker-compose up --build -d
