@@ -22,3 +22,6 @@ jobs:
         script: |
           whoami
           ls -al
+          cd /usr/src/app
+          git clone https://github.com/Coremotor/docker-learn.git
+          docker compose up --build
