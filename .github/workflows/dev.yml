@@ -21,6 +21,7 @@ jobs:
           cd /usr/src/app
           rm -R docker-learn
           git clone https://github.com/Coremotor/docker-learn.git
+          git checkout develop
           cd docker-learn
           docker-compose up --build -d
           docker image prune -f
