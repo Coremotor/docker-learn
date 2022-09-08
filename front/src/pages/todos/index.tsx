@@ -89,6 +89,7 @@ const Todos = () => {
 
   return (
     <div>
+      <h1>Todos</h1>
       <TodoList todos={todosQuery.data} del={del} setTodoId={setTodoId} />
       <AddTodo create={create} />
       <Todo todo={todoQuery.data} edit={edit} />
