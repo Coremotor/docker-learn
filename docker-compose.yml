@@ -2,6 +2,7 @@ version: "3"
 services:
   api:
     build: ./backend
+    restart: always
     ports:
       - "8090:8090"
 #    depends_on:
@@ -9,6 +10,7 @@ services:
     container_name: backend
   client:
     build: ./front
+    restart: always
     ports:
       - "80:80"
     container_name: front
