@@ -2,7 +2,11 @@ import { AddTodoDto, EditTodo } from "src/interfaces";
 import { hosts } from "src/api/hosts";
 
 export const getTodos = async () => {
-  const response = await fetch(`${hosts.local}/todos`);
+  const response = await fetch(`${hosts.remote}/todos`, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
