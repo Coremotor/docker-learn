@@ -9,4 +9,4 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-CMD [ "node", "router.js" ]
+CMD [ "node", "index.js" ]
