@@ -3,6 +3,7 @@ import { hosts } from "src/api/hosts";
 
 export const getTodos = async () => {
   const response = await fetch(`${hosts.remote}/todos`, {
+    mode: "cors",
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
