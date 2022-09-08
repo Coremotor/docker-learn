@@ -1,7 +1,8 @@
 import { AddTodoDto, EditTodo } from "src/interfaces";
+import { hosts } from "src/api/hosts";
 
 export const getTodos = async () => {
-  const response = await fetch("http://localhost:8090/todos");
+  const response = await fetch(`${hosts.remote}/todos`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -10,7 +11,7 @@ export const getTodos = async () => {
 
 export const getTodo = async (id: number | null) => {
   if (!id) return;
-  const response = await fetch(`http://localhost:8090/todos/${id}`);
+  const response = await fetch(`${hosts.remote}/todos/${id}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -19,7 +20,7 @@ export const getTodo = async (id: number | null) => {
 
 export const postTodo = async (todo: AddTodoDto) => {
   try {
-    await fetch("http://localhost:8090/todos", {
+    await fetch(`${hosts.remote}/todos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -34,7 +35,7 @@ export const postTodo = async (todo: AddTodoDto) => {
 export const editTodo = async (data: EditTodo) => {
   const { id, todo } = data;
   try {
-    await fetch(`http://localhost:8090/todos/${id}`, {
+    await fetch(`${hosts.remote}/todos/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -48,7 +49,7 @@ export const editTodo = async (data: EditTodo) => {
 
 export const deleteTodo = async (id: number) => {
   try {
-    await fetch(`http://localhost:8090/todos/${id}`, {
+    await fetch(`${hosts.remote}/todos/${id}`, {
       method: "DELETE",
     });
   } catch (e) {
