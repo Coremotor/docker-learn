@@ -13,6 +13,8 @@ import TodoList from "src/pages/todos/components/todoList";
 import AddTodo from "src/pages/todos/components/addTodo";
 import Todo from "src/pages/todos/components/todo";
 
+import { Container, Heading } from "@chakra-ui/react";
+
 export const QueryKeys = {
   todos: "todos",
   todo: "todo",
@@ -63,7 +65,7 @@ const Todos = () => {
     (data: EditTodo) => editTodo(data),
     {
       onSuccess: async () =>
-        await queryClient.invalidateQueries([QueryKeys.todos]),
+        await queryClient.invalidateQueries([QueryKeys.todos, QueryKeys.todo]),
     }
   );
 
@@ -88,12 +90,20 @@ const Todos = () => {
   }
 
   return (
-    <div>
-      <h1>Todos</h1>
-      <TodoList todos={todosQuery.data} del={del} setTodoId={setTodoId} />
+    <Container paddingY={20}>
+      <Heading>Todos</Heading>
+      <TodoList
+        todoId={todoId}
+        todos={todosQuery.data}
+        del={del}
+        setTodoId={setTodoId}
+        isLoading={todosQuery.isLoading}
+      />
       <AddTodo create={create} />
-      <Todo todo={todoQuery.data} edit={edit} />
-    </div>
+      {todosQuery.data.some((todo) => todo.id === todoId) && (
+        <Todo todo={todoQuery.data} edit={edit} />
+      )}
+    </Container>
   );
 };
 
