@@ -35,11 +35,11 @@ const TodoList: FC<TProps> = ({ todos, setTodoId, del, isLoading, todoId }) => {
                 borderRadius={4}
                 align="center"
                 _hover={{
-                  backgroundColor: "teal.200",
+                  shadow: "xl",
                   transition: "0.5s",
                 }}
                 backgroundColor={
-                  todo.id === todoId ? "teal.600" : "transparent"
+                  todo.id === todoId ? "teal.100" : "transparent"
                 }
               >
                 <Text>{todo.name}</Text>

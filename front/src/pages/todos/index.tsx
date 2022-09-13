@@ -1,73 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  deleteTodo,
-  editTodo,
-  getTodo,
-  getTodos,
-  postTodo,
-} from "src/api/todos";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getTodos } from "src/api/todos";
 import { UseQueryResult } from "@tanstack/react-query/src/types";
-import { AddTodoDto, EditTodo, QueryError, TodoInList } from "src/interfaces";
-import TodoList from "src/pages/todos/components/todoList";
-import AddTodo from "src/pages/todos/components/addTodo";
-import Todo from "src/pages/todos/components/todo";
+import { AddTodoDto, QueryError, TodoInList } from "src/interfaces";
+import TodoList from "src/components/todoList";
+import AddTodo from "src/components/addTodo";
+import Todo from "src/components/todo";
 
-import { Container, Heading } from "@chakra-ui/react";
-
-export const QueryKeys = {
-  todos: "todos",
-  todo: "todo",
-};
+import { Container } from "@chakra-ui/react";
+import { QueryKeys, todosModels } from "src/models/todos";
 
 const Todos = () => {
   const queryClient = useQueryClient();
+  const {
+    addTodoMutation,
+    deleteTodoMutation,
+    editTodoMutation,
+    useGetTodoById,
+  } = todosModels(queryClient);
+
+  const [todoId, setTodoId] = useState<number | null>(null);
 
   const todosQuery: UseQueryResult<TodoInList[], QueryError> = useQuery(
     [QueryKeys.todos],
     getTodos
   );
 
-  const [todoId, setTodoId] = useState<number | null>(null);
-
-  const useGetTodoById = (id: number | null) => {
-    return useQuery([QueryKeys.todo], () => getTodo(id), {
-      refetchOnWindowFocus: false,
-    });
-  };
-
   const todoQuery = useGetTodoById(todoId);
-
-  useEffect(() => {
-    todoQuery.refetch().then(() => null);
-  }, [todoId]);
-
-  const addTodoMutation = useMutation(
-    [QueryKeys.todos],
-    (todo: AddTodoDto) => postTodo(todo),
-    {
-      onSuccess: async () =>
-        await queryClient.invalidateQueries([QueryKeys.todos]),
-    }
-  );
-
-  const deleteTodoMutation = useMutation(
-    [QueryKeys.todos],
-    (id: number) => deleteTodo(id),
-    {
-      onSuccess: async () =>
-        await queryClient.invalidateQueries([QueryKeys.todos]),
-    }
-  );
-
-  const editTodoMutation = useMutation(
-    [QueryKeys.todos],
-    (data: EditTodo) => editTodo(data),
-    {
-      onSuccess: async () =>
-        await queryClient.invalidateQueries([QueryKeys.todos, QueryKeys.todo]),
-    }
-  );
 
   const create = async (todo: AddTodoDto) => {
     await addTodoMutation.mutateAsync(todo);
@@ -81,6 +40,10 @@ const Todos = () => {
     await deleteTodoMutation.mutateAsync(id);
   };
 
+  useEffect(() => {
+    todoQuery.refetch().then(() => null);
+  }, [todoId]);
+
   if (todosQuery.isLoading) {
     return <span>Loading...</span>;
   }
@@ -90,8 +53,7 @@ const Todos = () => {
   }
 
   return (
-    <Container paddingY={20}>
-      <Heading>Todos</Heading>
+    <Container>
       <TodoList
         todoId={todoId}
         todos={todosQuery.data}
